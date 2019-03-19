@@ -1,28 +1,40 @@
 {
-  "name": "webpack-typescript-react",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "antd": "^3.15.0"
-  },
-  "devDependencies": {
-    "@types/react": "^16.8.7",
-    "@types/react-dom": "^16.8.2",
-    "awesome-typescript-loader": "^5.2.1",
-    "css-loader": "^2.1.1",
-    "react": "^16.8.4",
-    "react-dom": "^16.8.4",
-    "style-loader": "^0.23.1",
-    "typescript": "^3.3.3333",
-    "webpack": "^4.29.6",
-    "webpack-cli": "^3.2.3"
-  }
+   "name": "webpack-typescript-react",
+   "version": "1.0.0",
+   "description": "",
+   "main": "index.js",
+   "scripts": {
+      "build": "webpack",
+      "dev": "webpack-dev-server --content-base src",
+      "test": "jest",
+      "test-coverage": "jest --coverage"
+   },
+   "keywords": [],
+   "author": "",
+   "license": "ISC",
+   "dependencies": {
+      "antd": "^3.15.0"
+   },
+   "devDependencies": {
+      "@types/enzyme": "^3.9.0",
+      "@types/enzyme-adapter-react-16": "^1.0.5",
+      "@types/jest": "^24.0.11",
+      "@types/react": "^16.8.7",
+      "@types/react-dom": "^16.8.2",
+      "awesome-typescript-loader": "^5.2.1",
+      "css-loader": "^2.1.1",
+      "enzyme": "^3.9.0",
+      "enzyme-adapter-react-16": "^1.11.2",
+      "jest": "^24.5.0",
+      "react": "^16.8.4",
+      "react-dom": "^16.8.4",
+      "style-loader": "^0.23.1",
+      "ts-jest": "^24.0.0",
+      "tslint": "^5.14.0",
+      "tslint-config-airbnb": "^5.11.1",
+      "typescript": "^3.3.3333",
+      "webpack": "^4.29.6",
+      "webpack-cli": "^3.2.3",
+      "webpack-dev-server": "^3.2.1"
+   }
 }
