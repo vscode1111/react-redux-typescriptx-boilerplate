@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { render } from 'react-dom';
 import App from './components/App';
-import { sum } from './foo'
+import { sum } from './foo';
 
 
 render(
-   <App message="World" />,
+   <App message="World 23" />,
    document.getElementById('root'),
 );
 
