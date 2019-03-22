@@ -33,8 +33,9 @@ module.exports = (env, argv) => {
    console.log(`isProduction = ${isProduction}`);
 
    return {
+      // context: sourcePath,
       entry: {
-         jsx: `${sourcePath}/index.tsx`,
+         jsx: `${sourcePath}/app/index.tsx`,
          // vendor: [
          //    'react',
          //    'react-dom',
@@ -50,7 +51,13 @@ module.exports = (env, argv) => {
       },
       devtool: 'source-map',
       resolve: {
-         extensions: ['.js', '.json', '.ts', '.tsx'],
+         extensions: ['.js', '.ts', '.tsx'],
+         // Fix webpack's default behavior to not load packages with jsnext:main module
+         // (jsnext:main directs not usually distributable es6 format, but es6 sources)
+         mainFields: ['module', 'browser', 'main'],
+         alias: {
+            app: path.resolve(__dirname, 'src/app/')
+         }
       },
       module: {
          rules: [

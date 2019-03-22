@@ -3,7 +3,7 @@ import * as React from 'react';
 import { shallow } from 'enzyme';
 import * as Adapter from 'enzyme-adapter-react-16';
 import { configure } from 'enzyme';
-import Wow from '../components/Wow';
+import Wow from '../app/components/Wow';
 
 configure({ adapter: new Adapter() });
 
