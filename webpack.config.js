@@ -4,7 +4,7 @@ const path = require('path');
 // variables
 const srcDir = 'src';
 const buildDir = 'build';
-// const isProduction = process.argv.indexOf('-p') >= 0 || process.env.NODE_ENV === 'production';
+// const isProduction = process.argv.mode === 'production' || process.env.NODE_ENV === 'production';
 const sourcePath = path.join(__dirname, `./${srcDir}`);
 const outPath = path.join(__dirname, `./${buildDir}`);
 
@@ -29,6 +29,9 @@ const configProd = {
 
 module.exports = (env, argv) => {
    const isProduction = argv.mode === 'production';
+
+   console.log(`isProduction = ${isProduction}`);
+
    return {
       entry: {
          jsx: `${sourcePath}/index.tsx`,
@@ -62,13 +65,6 @@ module.exports = (env, argv) => {
                test: /\.css$/,
                exclude: /node_modules/,
                // use: configProd.css
-
-               // loader: 'css-loader',
-               // options: {
-               //    modules: true,
-               //    context: path.resolve(__dirname, 'context'),
-               // },
-
                use: [
                   isProduction ? MiniCssExtractPlugin.loader : 'style-loader',
                   {
@@ -80,6 +76,24 @@ module.exports = (env, argv) => {
                         localIdentName: isProduction ? '[hash:base64:5]' : '[local]__[hash:base64:5]'
                      }
                   },
+                  {
+                     loader: 'postcss-loader',
+                     options: {
+                        ident: 'postcss',
+                        plugins: [
+                           require('postcss-import')({ addDependencyTo: webpack }),
+                           require('postcss-url')(),
+                           require('postcss-preset-env')({
+                              /* use stage 2 features (defaults) */
+                              stage: 2
+                           }),
+                           require('postcss-reporter')(),
+                           require('postcss-browser-reporter')({
+                              disabled: isProduction
+                           })
+                        ]
+                     }
+                  }
                ]
             },
          ]
@@ -100,7 +114,7 @@ module.exports = (env, argv) => {
             filename: 'index.html',
          }),
          new MiniCssExtractPlugin({
-            filename: 'bundle.css',
+            filename: 'app-[contenthash].css',
             // disable: !isProduction
          }),
          // new ExtractTextPlugin({

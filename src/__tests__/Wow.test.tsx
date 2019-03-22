@@ -1,7 +1,7 @@
 // import React from 'react';
 import * as React from 'react';
 import { shallow } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
+import * as Adapter from 'enzyme-adapter-react-16';
 import { configure } from 'enzyme';
 import Wow from '../components/Wow';
 

@@ -1,7 +1,8 @@
 import * as React from 'react';
+// import * as style from './style.css';
 // import Button from 'antd/lib/button';
-import Wow from './components/Wow';
-import './App.css';
+// import './style.css';
+import Wow from '../../components/Wow';
 
 const enum Player {
    None = 0,
@@ -16,6 +17,11 @@ interface AppProps {
 interface IState {
    board: Player[];
 }
+
+const divStyle = {
+  color: 'red',
+  // backgroundImage: 'url(' + imgUrl + ')',
+};
 
 export default class App extends React.Component<AppProps, IState> {
    state = {
@@ -49,10 +55,11 @@ export default class App extends React.Component<AppProps, IState> {
       const { message } = this.props;
       return (
          <div>
-            <h1>Hello {message}</h1>
+            {/* <h1 className={style.test}>Hello {message}</h1> */}
+            <h1 style={divStyle}>Hello {message}</h1>
             {/* <Button type="primary">Test</Button> */}
             <Wow />
-            {this.renderBoard()}
+            {/* {this.renderBoard()} */}
          </div>
       );
    }
