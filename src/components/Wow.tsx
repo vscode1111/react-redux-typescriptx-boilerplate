@@ -1,6 +1,6 @@
 import React from 'react';
 export default function () {
   return (
-    <h2>WOW++</h2>
+    <h2>WOW++123</h2>
   );
 }
