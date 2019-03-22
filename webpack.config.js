@@ -12,38 +12,15 @@ const outPath = path.join(__dirname, `./${buildDir}`);
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
-
-const configProd = {
-   app: './src/index.tsx',
-   publicPath: '/',
-   css: ExtractTextPlugin.extract({
-      fallback: 'style-loader',
-      use: [
-         'css-loader',
-         'postcss-loader',
-         'sass-loader',
-      ]
-   })
-}
 
 module.exports = (env, argv) => {
    const isProduction = argv.mode === 'production';
-
    console.log(`isProduction = ${isProduction}`);
 
    return {
       // context: sourcePath,
       entry: {
-         jsx: `${sourcePath}/app/index.tsx`,
-         // vendor: [
-         //    'react',
-         //    'react-dom',
-         //    'react-redux',
-         //    'react-router',
-         //    'react-router-redux',
-         //    'redux'
-         // ]
+         jsx: `${sourcePath}/app/index.tsx`
       },
       output: {
          filename: isProduction ? 'app-[contenthash].js' : 'app-debug.js',
@@ -56,7 +33,7 @@ module.exports = (env, argv) => {
          // (jsnext:main directs not usually distributable es6 format, but es6 sources)
          mainFields: ['module', 'browser', 'main'],
          alias: {
-            app: path.resolve(__dirname, 'src/app/')
+            app: `${sourcePath}/app/`
          }
       },
       module: {
@@ -71,7 +48,7 @@ module.exports = (env, argv) => {
                //test: /\.(sass|scss|css)$/,
                test: /\.css$/,
                exclude: /node_modules/,
-               // use: configProd.css
+               // use: config.css
                use: [
                   isProduction ? MiniCssExtractPlugin.loader : 'style-loader',
                   {
@@ -79,31 +56,49 @@ module.exports = (env, argv) => {
                      query: {
                         modules: true,
                         sourceMap: !isProduction,
-                        importLoaders: 1,
-                        localIdentName: isProduction ? '[hash:base64:5]' : '[local]__[hash:base64:5]'
+                        // importLoaders: 1,
+                        // localIdentName: isProduction ? '[hash:base64:5]' : '[local]__[hash:base64:5]'
                      }
                   },
-                  {
-                     loader: 'postcss-loader',
-                     options: {
-                        ident: 'postcss',
-                        plugins: [
-                           require('postcss-import')({ addDependencyTo: webpack }),
-                           require('postcss-url')(),
-                           require('postcss-preset-env')({
-                              /* use stage 2 features (defaults) */
-                              stage: 2
-                           }),
-                           require('postcss-reporter')(),
-                           require('postcss-browser-reporter')({
-                              disabled: isProduction
-                           })
-                        ]
-                     }
-                  }
+                  // {
+                  //    loader: 'postcss-loader',
+                  //    options: {
+                  //       ident: 'postcss',
+                  //       plugins: [
+                  //          require('postcss-import')({ addDependencyTo: webpack }),
+                  //          require('postcss-url')(),
+                  //          require('postcss-preset-env')({
+                  //             /* use stage 2 features (defaults) */
+                  //             stage: 2
+                  //          }),
+                  //          require('postcss-reporter')(),
+                  //          require('postcss-browser-reporter')({
+                  //             disabled: isProduction
+                  //          })
+                  //       ]
+                  //    }
+                  // }
                ]
             },
          ]
+      },
+      optimization: {
+         splitChunks: {
+            name: true,
+            cacheGroups: {
+               commons: {
+                  chunks: 'initial',
+                  minChunks: 2
+               },
+               vendors: {
+                  test: /[\\/]node_modules[\\/]/,
+                  chunks: 'all',
+                  filename: isProduction ? 'vendor-[contenthash].js' : 'vendor-debug.js',
+                  priority: -10
+               }
+            }
+         },
+         runtimeChunk: true
       },
       performance: {
          hints: "warning", // enum
@@ -122,7 +117,7 @@ module.exports = (env, argv) => {
          }),
          new MiniCssExtractPlugin({
             filename: 'app-[contenthash].css',
-            // disable: !isProduction
+            disable: !isProduction
          }),
          // new ExtractTextPlugin({
          //    filename: 'bundle.css',

@@ -55,7 +55,7 @@ export default class App extends React.Component<AppProps, IState> {
       const { message } = this.props;
       return (
          <div>
-            <h1 className={style.test}>Hello {message}</h1>
+            <h1 className={style.text1}>Hello {message}</h1>
             <h1 style={divStyle}>Hello {message}</h1>
             {/* <Button type="primary">Test</Button> */}
             <Wow />
