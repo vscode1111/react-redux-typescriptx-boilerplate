@@ -109,20 +109,35 @@ module.exports = (env, argv) => {
             return assetFilename.endsWith('.css') || assetFilename.endsWith('.js');
          }
       },
-      plugins: [
-         new CleanWebpackPlugin(),
-         new HtmlWebpackPlugin({
-            template: `./${srcDir}/index.html`,
-            filename: 'index.html',
-         }),
-         new MiniCssExtractPlugin({
-            filename: 'app-[contenthash].css',
-            disable: !isProduction
-         }),
-         // new ExtractTextPlugin({
-         //    filename: 'bundle.css',
-         //    // allChunks: true,
-         // })
-      ],
+      // plugins: [
+      //    new CleanWebpackPlugin(),
+      //    new HtmlWebpackPlugin({
+      //       template: `./${srcDir}/index.html`,
+      //       filename: 'index.html',
+      //    }),
+      //    new MiniCssExtractPlugin({
+      //       filename: 'app-[contenthash].css',
+      //       disable: !isProduction
+      //    })
+      // ],
+      plugins: (function () {
+         const plugins = [];
+         plugins.push(
+            new HtmlWebpackPlugin({
+               template: `./${srcDir}/index.html`,
+               filename: 'index.html',
+            })
+         );
+         if (isProduction) {
+            //add some plugins that are only for production here
+            plugins.push(
+               new CleanWebpackPlugin(),
+               new MiniCssExtractPlugin({
+                  filename: 'app-[contenthash].css',
+               })
+            )
+         }
+         return plugins;
+      }()),
    }
 };
