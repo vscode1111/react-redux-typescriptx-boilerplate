@@ -1,5 +1,6 @@
 import * as React from 'react';
-import * as style from './style.css';
+// import * as style from './style.css';
+import * as style from './style.less';
 // import Button from 'antd/lib/button';
 // import './style.css';
 import Wow from 'app/components/Wow';

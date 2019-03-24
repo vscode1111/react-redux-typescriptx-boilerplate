@@ -12,6 +12,7 @@ const outPath = path.join(__dirname, `./${buildDir}`);
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 
 module.exports = (env, argv) => {
    const isProduction = argv.mode === 'production';
@@ -46,23 +47,31 @@ module.exports = (env, argv) => {
             // .css
             {
                //test: /\.(sass|scss|css)$/,
-               test: /\.css$/,
+               //test: /\.css$/,
+               test: /\.(css|less)$/,
                exclude: /node_modules/,
                // use: config.css
                use: [
                   isProduction ? MiniCssExtractPlugin.loader : 'style-loader',
                   {
                      loader: 'css-loader',
-                     query: {
+                     options: {
                         modules: true,
                         sourceMap: !isProduction,
                      }
-                  }
+                  },
+                  {
+                     loader: 'less-loader',
+                     options: { sourceMap: !isProduction }
+                  },
                ]
             },
          ]
       },
       optimization: {
+         minimizer: [
+            new OptimizeCSSAssetsPlugin({})
+         ],
          splitChunks: {
             cacheGroups: {
                vendors: {
