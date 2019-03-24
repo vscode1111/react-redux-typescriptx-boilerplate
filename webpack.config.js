@@ -26,7 +26,7 @@ module.exports = (env, argv) => {
          filename: isProduction ? 'app-[contenthash].js' : 'app-debug.js',
          path: outPath,
       },
-      devtool: 'source-map',
+      devtool: isProduction ? '' : 'source-map',
       resolve: {
          extensions: ['.js', '.ts', '.tsx'],
          // Fix webpack's default behavior to not load packages with jsnext:main module
@@ -56,40 +56,15 @@ module.exports = (env, argv) => {
                      query: {
                         modules: true,
                         sourceMap: !isProduction,
-                        // importLoaders: 1,
-                        // localIdentName: isProduction ? '[hash:base64:5]' : '[local]__[hash:base64:5]'
                      }
-                  },
-                  // {
-                  //    loader: 'postcss-loader',
-                  //    options: {
-                  //       ident: 'postcss',
-                  //       plugins: [
-                  //          require('postcss-import')({ addDependencyTo: webpack }),
-                  //          require('postcss-url')(),
-                  //          require('postcss-preset-env')({
-                  //             /* use stage 2 features (defaults) */
-                  //             stage: 2
-                  //          }),
-                  //          require('postcss-reporter')(),
-                  //          require('postcss-browser-reporter')({
-                  //             disabled: isProduction
-                  //          })
-                  //       ]
-                  //    }
-                  // }
+                  }
                ]
             },
          ]
       },
       optimization: {
          splitChunks: {
-            name: true,
             cacheGroups: {
-               commons: {
-                  chunks: 'initial',
-                  minChunks: 2
-               },
                vendors: {
                   test: /[\\/]node_modules[\\/]/,
                   chunks: 'all',
@@ -98,7 +73,6 @@ module.exports = (env, argv) => {
                }
             }
          },
-         runtimeChunk: true
       },
       performance: {
          hints: "warning", // enum
@@ -109,17 +83,6 @@ module.exports = (env, argv) => {
             return assetFilename.endsWith('.css') || assetFilename.endsWith('.js');
          }
       },
-      // plugins: [
-      //    new CleanWebpackPlugin(),
-      //    new HtmlWebpackPlugin({
-      //       template: `./${srcDir}/index.html`,
-      //       filename: 'index.html',
-      //    }),
-      //    new MiniCssExtractPlugin({
-      //       filename: 'app-[contenthash].css',
-      //       disable: !isProduction
-      //    })
-      // ],
       plugins: (function () {
          const plugins = [];
          plugins.push(

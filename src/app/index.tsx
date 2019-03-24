@@ -4,7 +4,7 @@ import App from 'app/containers/App';
 import { sum } from 'app/foo';
 
 render(
-   <App message="World 123++++" />,
+   <App message="World 1" />,
    document.getElementById('root'),
 );
 
