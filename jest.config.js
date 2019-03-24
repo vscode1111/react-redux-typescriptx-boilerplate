@@ -6,7 +6,7 @@ module.exports = {
       "^.+\\.tsx?$": "ts-jest"
    },
    //"testRegex": "(/__tests23__/.*|(\\.|/)(test|spec))\\.tsx?$",
-   //"testRegex": "/__tests__/App.test.tsx",
+   //"testRegex": "/__tests__/foo.test.ts",
    "testRegex": "/__tests__/.*",
    "moduleFileExtensions": [
       "ts",
@@ -16,4 +16,8 @@ module.exports = {
       "json",
       "node"
    ],
+   "moduleNameMapper": {
+      "app/(.*)": "<rootDir>/src/app/$1",
+      "\\.(css|less)$": "identity-obj-proxy"
+   }
 }
