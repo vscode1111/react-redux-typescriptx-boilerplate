@@ -31,11 +31,32 @@ describe('webdriver', () => {
       await driver.quit();
    });
 
+   const sleep = (ms: number) => {
+      return new Promise(resolve => setTimeout(resolve, ms));
+   };
+
+   const cellClick = async (id: string) => {
+      (await getElementById(driver, id)).click();
+      // await sleep(10);
+   };
+
    test('test', async () => {
-      const root = await getElementById(driver, 'root');
-      const text = await root.getText();
+      const rootElement = await getElementById(driver, 'root');
+      const rootText = await rootElement.getText();
       // console.log(text);
-      expect(text).toContain('Hello World');
+      expect(rootText).toContain('Hello World');
+
+      await cellClick('cell0');
+      await cellClick('cell1');
+      await cellClick('cell4');
+      await cellClick('cell5');
+      await cellClick('cell8');
+
+      // await sleep(10);
+      const statusElement = await getElementById(driver, 'status');
+      const statusText = await statusElement.getText();
+      // console.log(statusText);
+      expect(statusText).toContain('Player 1 won');
 
       // const output = await getElementById(driver, 'output');
       // const outputVal = await output.getAttribute('value');
