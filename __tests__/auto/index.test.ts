@@ -1,65 +1,78 @@
-import { Builder, ThenableWebDriver, until, By } from 'selenium-webdriver';
+import { Builder, ThenableWebDriver, until, By, WebDriver, Capabilities } from 'selenium-webdriver';
+import * as firefox from 'selenium-webdriver/firefox';
 import * as path from 'path';
 
-const getElementById = async (driver: ThenableWebDriver, id: string, timeout = 2000) => {
-   const el = await driver.wait(until.elementLocated(By.id(id)), timeout);
-   return await driver.wait(until.elementIsVisible(el), timeout);
+const getElementById = async (driver: ThenableWebDriver, id: string, timeout = 20000) => {
+   // const el = await driver.wait(until.elementLocated(By.id(id)), timeout);
+   // return await driver.wait(until.elementIsVisible(el), timeout);
+   return await driver.findElement(By.id(id));
 };
 
 describe('webdriver', () => {
-   let driver: ThenableWebDriver;
+   let drivers: ThenableWebDriver[] = [];
 
    beforeAll(async () => {
-      // const options = new firefox.Options();
-      // options.headless();
-      // driver = new Builder()
-      //    .forBrowser('firefox')
-      //    .setFirefoxOptions(options)
-      //    .build();
+      jest.setTimeout(10000);
 
-      // driver = new Builder().withCapabilities(Capabilities.chrome()).build();
-      // driver = new Builder().forBrowser('chrome').build();
-      // driver = new Builder().forBrowser('firefox').build();
-      driver = new Builder().forBrowser('ie').build();
+      const chromeDriver = new Builder().withCapabilities(Capabilities.chrome()).build();
+      drivers.push(chromeDriver);
 
-      // eslint-disable-next-line no-undef
-      await driver.get('file://' + path.join(__dirname, '../../build/index.html'));
+      const ieDriver = new Builder().withCapabilities(Capabilities.ie()).build();
+      drivers.push(ieDriver);
+
+      const options = new firefox.Options().setBinary('C:\\Program Files\\Mozilla Firefox\\firefox.exe');
+      const firefoxDriver = new Builder().withCapabilities(Capabilities.firefox()).setFirefoxOptions(options).build();
+      drivers.push(firefoxDriver);
+
+      for (const driver of drivers) {
+         await driver.get('file://' + path.join(__dirname, '../../build/index.html'));
+      }
       // await driver.get('https://www.google.com/');
    });
 
    afterAll(async () => {
-      // await driver.quit();
+      for (const driver of drivers) {
+         await driver.quit();
+      }
    });
 
    const sleep = (ms: number) => {
       return new Promise(resolve => setTimeout(resolve, ms));
    };
 
-   const cellClick = async (id: string) => {
-      (await getElementById(driver, id)).click();
-      // await sleep(10);
+   const clickCell = async (driver: ThenableWebDriver, id: string) => {
+      const element = await getElementById(driver, id);
+      await element.click();
+      // await sleep(100);
    };
 
-   test('test', async () => {
-      const rootElement = await getElementById(driver, 'root');
-      const rootText = await rootElement.getText();
-      // console.log(text);
-      expect(rootText).toContain('Hello World');
+   const testByManyDrivers = async (fn: (driver: ThenableWebDriver) => void) => {
+      for (const driver of drivers) {
+         await fn(driver);
+      }
+   };
 
-      await cellClick('cell0');
-      await cellClick('cell1');
-      await cellClick('cell4');
-      await cellClick('cell5');
-      await cellClick('cell8');
+   it('test', async () => {
+      await testByManyDrivers(async (driver) => {
+         const cap = await driver.getCapabilities();
+         console.log(`${cap.get('browserName')}`);
+         const rootElement = await getElementById(driver, 'root');
 
-      // await sleep(10);
-      const statusElement = await getElementById(driver, 'status');
-      const statusText = await statusElement.getText();
-      // console.log(statusText);
-      expect(statusText).toContain('Player 1 won');
+         const rootText = await rootElement.getText();
+         // console.log(rootText);
+         expect(rootText).toContain('Hello World');
 
-      // const output = await getElementById(driver, 'output');
-      // const outputVal = await output.getAttribute('value');
-      // expect(outputVal).toEqual('Something');
+         await clickCell(driver, 'cell0');
+         await clickCell(driver, 'cell1');
+         await clickCell(driver, 'cell4');
+         await clickCell(driver, 'cell5');
+         await clickCell(driver, 'cell8');
+
+         // await sleep(10);
+         const statusElement = await getElementById(driver, 'status');
+         const statusText = await statusElement.getText();
+         // console.log(statusText);
+         expect(statusText).toContain('Player 1 won');
+      });
    });
 });
