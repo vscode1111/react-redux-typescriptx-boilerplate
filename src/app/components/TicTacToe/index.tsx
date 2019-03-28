@@ -10,14 +10,16 @@ const enum Player {
 type ONGOING_GAME = -1;
 const ONGOING_GAME = -1;
 
-interface IState {
-   board: Player[];
-   nextPlayerTurn: Player;
-   gameIsWon: Player | ONGOING_GAME;
+export namespace TicTacToe {
+   export interface State {
+      board: Player[];
+      nextPlayerTurn: Player;
+      gameIsWon: Player | ONGOING_GAME;
+   }
 }
 
-export default class TicTacToe extends React.Component<{}, IState> {
-   state: IState = {
+export default class TicTacToe extends React.Component<{}, TicTacToe.State> {
+   state: TicTacToe.State = {
       board: [
          Player.None,
          Player.None,
@@ -33,7 +35,7 @@ export default class TicTacToe extends React.Component<{}, IState> {
       gameIsWon: ONGOING_GAME
    };
 
-      checkIfGameIsOver = (board: Player[]): Player => {
+   checkIfGameIsOver = (board: Player[]): Player => {
       if (board[0] === board[1] && board[1] === board[2] && board[2] !== Player.None) {
          return board[0];
       } else if (board[3] === board[4] && board[4] === board[5] && board[5] !== Player.None) {
@@ -92,7 +94,7 @@ export default class TicTacToe extends React.Component<{}, IState> {
       const winningText = gameIsWon !== Player.None ? `Player ${gameIsWon} won` : 'The game is a draw';
 
       return <div
-         id = "status"
+         id="status"
          className={style.status}>
          {'player 1 is green'} <br />
          {'player 2 is red'} <br />

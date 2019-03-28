@@ -7,10 +7,8 @@ import Wow from 'app/components/Wow';
 
 configure({ adapter: new Adapter() });
 
-it('shallow renders without crashing', () => {
+it('Wow renders', () => {
    const wrapper = shallow(<Wow />);
-   // expect(shallow(<Wow />).contains(<h2>WOW++</h2>)).toBe(true);
-   // expect(shallow(<Wow />).contains('WOW++</h2>')).toBe(true);
    console.log(wrapper.html());
    expect(wrapper.html()).toBe('<h2 class="text1">WOW++</h2>');
 });
