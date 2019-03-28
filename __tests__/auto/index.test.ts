@@ -1,5 +1,4 @@
 import { Builder, ThenableWebDriver, until, By } from 'selenium-webdriver';
-// import * as firefox from 'selenium-webdriver/firefox';
 import * as path from 'path';
 
 const getElementById = async (driver: ThenableWebDriver, id: string, timeout = 2000) => {
@@ -19,8 +18,9 @@ describe('webdriver', () => {
       //    .build();
 
       // driver = new Builder().withCapabilities(Capabilities.chrome()).build();
-      driver = new Builder().forBrowser('chrome').build();
+      // driver = new Builder().forBrowser('chrome').build();
       // driver = new Builder().forBrowser('firefox').build();
+      driver = new Builder().forBrowser('ie').build();
 
       // eslint-disable-next-line no-undef
       await driver.get('file://' + path.join(__dirname, '../../build/index.html'));
@@ -28,7 +28,7 @@ describe('webdriver', () => {
    });
 
    afterAll(async () => {
-      await driver.quit();
+      // await driver.quit();
    });
 
    const sleep = (ms: number) => {
