@@ -10,21 +10,23 @@ configure({ adapter: new Adapter() });
 jest.mock('app/api/foo');
 
 it('Posts renders', async () => {
-   const wrapper = shallow(<Posts />);
+  const wrapper = shallow(<Posts />);
 
-   await waitUntil(() => {
-      const posts: any[] = wrapper.state('posts');
-      return posts !== null && posts.length > 0;
-   });
+  await waitUntil(() => {
+    const posts: any[] = wrapper.state('posts');
+    return posts !== null && posts.length > 0;
+  });
 
-   // console.log(wrapper.html());
-   expect(wrapper.html()).toContain('Posts');
-   expect(wrapper.html()).toContain('sunt aut facere repellat provident occaecati excepturi optio reprehenderit');
+  // console.log(wrapper.html());
+  expect(wrapper.html()).toContain('Posts');
+  expect(wrapper.html()).toContain(
+    'sunt aut facere repellat provident occaecati excepturi optio reprehenderit'
+  );
 
-   // setImmediate(() => {
-   //    // console.log(wrapper.html());
+  // setImmediate(() => {
+  //    // console.log(wrapper.html());
 
-   //    // console.log(wrapper.state('posts'));
-   //    done();
-   // }, 0);
+  //    // console.log(wrapper.state('posts'));
+  //    done();
+  // }, 0);
 });

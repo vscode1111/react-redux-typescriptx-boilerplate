@@ -5,19 +5,19 @@ import TicTacToe from 'app/components/TicTacToe';
 import Posts from 'app/components/Posts';
 
 interface AppProps {
-   message: string;
+  message: string;
 }
 
 export default class App extends React.Component<AppProps> {
-   render() {
-      const { message } = this.props;
-      return (
-         <div>
-            <h1 className={style.text1}>{message}</h1>
-            <Wow />
-            <TicTacToe />
-            <Posts />
-         </div>
-      );
-   }
+  render() {
+    const { message } = this.props;
+    return (
+      <div>
+        <h1 className={style.text1}>{message}</h1>
+        <Wow />
+        <TicTacToe />
+        <Posts />
+      </div>
+    );
+  }
 }
