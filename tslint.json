@@ -13,7 +13,7 @@
          "check-space"
       ],
       "curly": true,
-      "eofline": true,
+      // "eofline": true,
       "forin": true,
       "indent": [
          true,
@@ -69,10 +69,10 @@
          "jsx-double"
       ],
       "radix": false,
-      "semicolon": [
-         true,
-         "always"
-      ],
+      // "semicolon": [
+      //    true,
+      //    "always"
+      // ],
       "switch-default": true,
       "triple-equals": [
          true,
@@ -86,7 +86,8 @@
          "member-variable-declaration"
       ],
       "typedef-whitespace": [
-         true, {
+         true,
+         {
             "call-signature": "nospace",
             "index-signature": "nospace",
             "parameter": "nospace",
@@ -111,5 +112,9 @@
          "check-separator",
          "check-type"
       ]
-   }
+   },
+   "extends": [
+      // "tslint:latest",
+      "tslint-config-prettier"
+   ]
 }

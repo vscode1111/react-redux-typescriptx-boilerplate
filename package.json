@@ -8,7 +8,8 @@
       "dev": "webpack-dev-server --mode development --content-base src",
       "test": "jest",
       "test-coverage": "jest --coverage",
-      "prettier": "prettier --write \"src/**/*.{ts,tsx,css}\""
+      "prettier": "prettier --write \"src/**/*.{ts,tsx,css}\"",
+      "tslint-check": "tslint-config-prettier-check ./tslint.json"
    },
    "keywords": [],
    "author": "",
@@ -55,6 +56,7 @@
       "ts-loader": "^5.3.3",
       "tslint": "^5.14.0",
       "tslint-config-airbnb": "^5.11.1",
+      "tslint-config-prettier": "^1.18.0",
       "typescript": "^3.4.1",
       "webpack": "^4.29.6",
       "webpack-cleanup-plugin": "^0.5.1",
