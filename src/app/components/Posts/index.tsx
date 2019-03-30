@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { postData } from 'app/api/foo';
 
 export namespace Posts {
    export interface Props {
@@ -24,11 +25,10 @@ export default class Posts extends React.Component<Posts.Props, Posts.State> {
       };
    }
 
-   componentWillMount() {
-      // fetch('https://jsonplaceholder.typicode.com/posts')
-      //    .then(res => res.json())
-      //    // .then(data => console.log(data));
-      //    .then(data => this.setState({ posts: data }));
+   async componentDidMount() {
+      const data = await postData();
+      // console.log(data);
+      this.setState({ posts: data });
    }
 
    renderPosts = () => {

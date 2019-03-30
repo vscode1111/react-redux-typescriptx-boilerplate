@@ -1,6 +1,8 @@
 import { Builder, ThenableWebDriver, until, By, WebDriver, Capabilities } from 'selenium-webdriver';
 import * as firefox from 'selenium-webdriver/firefox';
 import * as path from 'path';
+import { sleep } from 'common/helper';
+import * as appRootPath from 'app-root-path';
 
 const getElementById = async (driver: ThenableWebDriver, id: string, timeout = 20000) => {
    // const el = await driver.wait(until.elementLocated(By.id(id)), timeout);
@@ -12,34 +14,29 @@ describe('webdriver', () => {
    let drivers: ThenableWebDriver[] = [];
 
    beforeAll(async () => {
-      jest.setTimeout(10000);
-
-      const chromeDriver = new Builder().withCapabilities(Capabilities.chrome()).build();
-      drivers.push(chromeDriver);
+      jest.setTimeout(60000);
 
       const ieDriver = new Builder().withCapabilities(Capabilities.ie()).build();
       drivers.push(ieDriver);
+
+      const chromeDriver = new Builder().withCapabilities(Capabilities.chrome()).build();
+      drivers.push(chromeDriver);
 
       const options = new firefox.Options().setBinary('C:\\Program Files\\Mozilla Firefox\\firefox.exe');
       const firefoxDriver = new Builder().withCapabilities(Capabilities.firefox()).setFirefoxOptions(options).build();
       drivers.push(firefoxDriver);
 
-      for (const driver of drivers) {
-         await driver.get('file://' + path.join(__dirname, '../../build/index.html'));
+      await doByManyDriversAtOnce(async (driver) => {
+         await driver.get('file://' + path.join(appRootPath.path, '/build/index.html'));
          // await driver.get('http://localhost:8080/');
-      }
-      // await driver.get('https://www.google.com/');
+      });
    });
 
    afterAll(async () => {
-      for (const driver of drivers) {
+      await doByManyDriversAtOnce(async (driver) => {
          await driver.quit();
-      }
+      });
    });
-
-   const sleep = (ms: number) => {
-      return new Promise(resolve => setTimeout(resolve, ms));
-   };
 
    const clickCell = async (driver: ThenableWebDriver, id: string) => {
       const element = await getElementById(driver, id);
@@ -47,16 +44,29 @@ describe('webdriver', () => {
       // await sleep(100);
    };
 
-   const testByManyDrivers = async (fn: (driver: ThenableWebDriver) => void) => {
+   const doByManyDriversAtOnce = async (fn: (driver: ThenableWebDriver) => void) => {
+      let promises = [];
+
+      const fnInt = async (driver: ThenableWebDriver) => {
+         try {
+            await fn(driver);
+         } catch (e) {
+            const cap = await driver.getCapabilities();
+            console.log(`[${cap.get('browserName')} fail]`);
+            throw e;
+         }
+      };
+
       for (const driver of drivers) {
-         await fn(driver);
+         promises.push(fnInt(driver));
       }
+
+      await Promise.all(promises);
    };
 
    it('test', async () => {
-      await testByManyDrivers(async (driver) => {
-         const cap = await driver.getCapabilities();
-         console.log(`${cap.get('browserName')}`);
+      await doByManyDriversAtOnce(async (driver) => {
+
          const rootElement = await getElementById(driver, 'root');
 
          const rootText = await rootElement.getText();

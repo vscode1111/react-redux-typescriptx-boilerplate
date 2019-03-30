@@ -34,7 +34,8 @@ module.exports = (env, argv) => {
          // (jsnext:main directs not usually distributable es6 format, but es6 sources)
          mainFields: ['module', 'browser', 'main'],
          alias: {
-            app: `${sourcePath}/app/`
+            src: `${sourcePath}/`,
+            app: `${sourcePath}/app/`,
          }
       },
       module: {
@@ -46,8 +47,6 @@ module.exports = (env, argv) => {
             },
             // .css
             {
-               //test: /\.(sass|scss|css)$/,
-               //test: /\.css$/,
                test: /\.(css|less)$/,
                exclude: /node_modules/,
                // use: config.css
@@ -98,7 +97,11 @@ module.exports = (env, argv) => {
             new HtmlWebpackPlugin({
                template: `./${srcDir}/index.html`,
                filename: 'index.html',
-            })
+            }),
+            new webpack.ProvidePlugin({
+               React: 'react',
+               Promise: 'es6-promise' //add Promises for IE !!! 
+            }),
          );
          if (isProduction) {
             //add some plugins that are only for production here

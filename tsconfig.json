@@ -19,9 +19,8 @@
       ],
       "baseUrl": "src",
       "paths": {
-         "app/*": [
-            "./app/*"
-         ]
+         "src/*": ["./*"],
+         "app/*": ["./app/*"],
       }
    },
    "exclude": [
