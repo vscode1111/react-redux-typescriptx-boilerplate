@@ -26,6 +26,7 @@ describe('webdriver', () => {
 
       for (const driver of drivers) {
          await driver.get('file://' + path.join(__dirname, '../../build/index.html'));
+         // await driver.get('http://localhost:8080/');
       }
       // await driver.get('https://www.google.com/');
    });
