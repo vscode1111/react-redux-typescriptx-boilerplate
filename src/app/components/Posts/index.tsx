@@ -1,15 +1,9 @@
 import * as React from 'react';
-import { postData } from 'app/api/foo';
+import { getData } from 'app/api/main';
+import { PostModel } from 'app/models/PostModel';
 
 export namespace Posts {
    export interface Props { }
-
-   export interface PostModel {
-      body: string;
-      id: number;
-      title: string;
-      userId: number;
-   }
 
    export interface State {
       posts?: PostModel[];
@@ -24,11 +18,11 @@ export default class Posts extends React.Component<Posts.Props, Posts.State> {
       };
    }
 
-   componentWillMount() {
-      // const data = await postData();
-      // this.setState({ posts: data });
+   async componentWillMount() {
+      const data = await getData();
+      this.setState({ posts: data });
 
-      postData().then(data => this.setState({ posts: data }));
+      // getData().then(data => this.setState({ posts: data }));
    }
 
    renderPosts = () => {

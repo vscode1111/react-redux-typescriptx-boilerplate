@@ -32,8 +32,8 @@ describe('webdriver', () => {
       drivers.push(firefoxDriver);
 
       await doByManyDriversAtOnce(async (driver) => {
-         await driver.get('file://' + path.join(appRootPath.path, '/build/index.html'));
-         // await driver.get('http://localhost:8080/');
+         // await driver.get('file://' + path.join(appRootPath.path, '/build/index.html'));
+         await driver.get('http://localhost:8080/');
       });
    });
 

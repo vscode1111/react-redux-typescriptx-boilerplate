@@ -8,32 +8,33 @@ import Posts from 'app/components/Posts';
 
 configure({ adapter: new Adapter() });
 
-jest.mock('app/api/foo');
+jest.mock('app/api/main');
 
 describe('<Posts />', () => {
-   beforeAll(() => {
-      nock('https://jsonplaceholder.typicode.com')
-         .defaultReplyHeaders({ 'access-control-allow-origin': '*' })
-         .get('/posts')
-         .reply(200, {
-            post: [
-               {
-                  body:
-                     'quia et suscipit↵suscipit recusandae consequuntur expedita et cum↵reprehenderit molestiae ut ut quas totam↵nostrum rerum est autem sunt rem eveniet architecto',
-                  id: 1,
-                  title:
-                     'sunt aut facere repellat provident occaecati excepturi optio reprehenderit',
-                  userId: 1
-               }
-            ]
-         });
-   });
+   // beforeAll(() => {
+   //    nock('https://jsonplaceholder.typicode.com')
+   //       .get('/posts')
+   //       .reply(200,
+   //          [
+   //             {
+   //                body:
+   //                   'quia et suscipit↵suscipit recusandae consequuntur expedita et cum↵reprehenderit molestiae ut ut quas totam↵nostrum rerum est autem sunt rem eveniet architecto',
+   //                id: 1,
+   //                title:
+   //                   'sunt aut facere repellat provident occaecati excepturi optio reprehenderit',
+   //                userId: 1
+   //             }
+   //          ]
+   //       );
+   // });
+
    it('Posts renders', async () => {
       const wrapper = shallow(<Posts />);
 
       await waitUntil(() => {
          const posts: any[] = wrapper.state('posts');
-         console.log(posts.length);
+         // console.log(posts.length);
+         // console.log(wrapper.state());
          return posts !== null && posts.length > 0;
       });
 

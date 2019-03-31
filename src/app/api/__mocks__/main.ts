@@ -3,7 +3,7 @@ import { join } from 'path';
 import * as appRootPath from 'app-root-path';
 const fullPath = join(appRootPath.path, 'data');
 
-export const postData = async () => {
+export const getData = async () => {
    // const data = [
    //    {
    //       body: 'quia et suscipit↵suscipit recusandae consequuntur expedita et cum↵reprehenderit molestiae ut ut quas totam↵nostrum rerum est autem sunt rem eveniet architecto',
