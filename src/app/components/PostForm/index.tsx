@@ -1,40 +1,56 @@
 import * as React from 'react'
 import { PostModel } from 'app/models/PostModel';
+import { postData } from 'app/api/main';
 
 export namespace PostForm {
    export interface Props { }
-   export interface State extends PostModel { }
+   export interface State {
+      status?: string;
+      post: PostModel;
+   }
 }
 
 export default class PostForm extends React.Component<PostForm.Props, PostForm.State> {
    constructor(props: PostForm.Props) {
       super(props);
       this.state = {
-         title: '',
-         body: ''
+         status: '...',
+         post: {
+            title: '',
+            body: ''
+         }
       };
       // this.onChange = this.onChange.bind(this);
    }
 
    onChange(e: React.ChangeEvent<HTMLInputElement>
       | React.ChangeEvent<HTMLTextAreaElement>) {
-      this.setState({ [e.target.name]: e.target.value })
+      const post = this.state.post;
+      const newPost = { ...post, ...{ [e.target.name]: e.target.value } };
+      const newState = { ...this.state, post: newPost };
+      this.setState(newState);
    }
 
-   onSubmit(e: React.FormEvent<EventTarget>) {
+   async onSubmit(e: React.FormEvent<EventTarget>) {
       e.preventDefault();
-      const { title, body } = this.state;
-      const post = {
+      let newState = { ...this.state, status: 'Request...' };
+      this.setState(newState);
+      const { title, body } = this.state.post;
+      const data = {
          title, body
       }
+      await postData(data);
+      newState = { ...this.state, status: 'Finished' };
+      this.setState(newState);
    }
 
    render() {
-      const { title, body } = this.state;
+      const { status, post } = this.state;
+      const { title, body } = post;
       return (
          <div>
             <h1>Post form</h1>
-            <form onSubmit={e => this.onSubmit(e)}>
+            <form onSubmit={async e => await this.onSubmit(e)}>
                <div>
                   <label>Title: </label>
                   <br />
@@ -57,6 +73,7 @@ export default class PostForm extends React.Component<PostForm.Props, PostForm.S
                </div>
                <br />
                <button type="submit">Submit</button>
+               <div>{status}</div>
             </form>
          </div>
       )
