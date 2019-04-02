@@ -29,13 +29,14 @@ describe('<Posts />', () => {
    // });
 
    it('Posts renders', async () => {
-      const wrapper = shallow(<Posts />);
+      const wrapper = shallow(<Posts />).dive();
 
       await waitUntil(() => {
-         const posts: any[] = wrapper.state('posts');
-         // console.log(posts.length);
+         const posts: any = wrapper.props();
+         // const posts = props.posts;
+         console.log(posts);
          // console.log(wrapper.state());
-         return posts !== null && posts.length > 0;
+         return posts && posts.length > 0;
       });
 
       // console.log(wrapper.html());
