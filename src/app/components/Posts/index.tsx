@@ -20,6 +20,13 @@ class Posts extends React.Component<Posts.Props, Posts.State> {
       this.props.fetchPosts();
    }
 
+   componentWillReceiveProps(nextProps: any) {
+      console.log(nextProps);
+      if (nextProps.newPost) {
+         this.props.posts.unshift(nextProps.newPost)
+      }
+   }
+
    renderPosts = () => {
       const data = this.props.posts;
       return data && data.length > 0
@@ -43,7 +50,8 @@ class Posts extends React.Component<Posts.Props, Posts.State> {
 }
 
 const mapStateToProps = (state: any) => ({
-   posts: state.posts.items
+   posts: state.posts.items,
+   newPost: state.posts.item
 });
 
 export default connect(mapStateToProps, { fetchPosts })(Posts)

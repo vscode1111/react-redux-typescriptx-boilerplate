@@ -1,38 +1,51 @@
 import * as React from 'react'
 import { PostModel } from 'app/models/PostModel';
-import { postData } from 'app/api/main';
+import { connect } from 'react-redux';
+import { createPost } from 'app/actions/postActions'
 
 export namespace PostForm {
-   export interface Props { }
-   export interface State {
-      status?: string;
-      post: PostModel;
+   export interface Props {
+      createPost?: Function;
    }
+   // export interface State {
+   //    status?: string;
+   //    post: PostModel;
+   // }
+
+   export interface State extends PostModel { }
 }
 
-export default class PostForm extends React.Component<PostForm.Props, PostForm.State> {
+class PostForm extends React.Component<PostForm.Props, PostForm.State> {
    constructor(props: PostForm.Props) {
       super(props);
+      // this.state = {
+      //    status: '...',
+      //    post: {
+      //       title: '',
+      //       body: ''
+      //    }
+      // };
+
       this.state = {
-         status: '...',
-         post: {
-            title: '',
-            body: ''
-         }
+         title: '',
+         body: ''
       };
       // this.onChange = this.onChange.bind(this);
    }
 
    onChange(e: React.ChangeEvent<HTMLInputElement>
       | React.ChangeEvent<HTMLTextAreaElement>) {
-      const post = this.state.post;
-      const newPost = { ...post, ...{ [e.target.name]: e.target.value } };
-      const newState = { ...this.state, post: newPost };
-      this.setState(newState);
+      // const post = this.state.post;
+      // const newPost = { ...post, ...{ [e.target.name]: e.target.value } };
+      // const newState = { ...this.state, post: newPost };
+      // this.setState(newState);
+      this.setState({ [e.target.name]: e.target.value });
    }
 
    async onSubmit(e: React.FormEvent<EventTarget>) {
       e.preventDefault();
+      /*
+      const t0 = new Date();
       let newState = { ...this.state, status: 'Request...' };
       this.setState(newState);
       const { title, body } = this.state.post;
@@ -40,13 +53,22 @@ export default class PostForm extends React.Component<PostForm.Props, PostForm.S
          title, body
       }
       await postData(data);
-      newState = { ...this.state, status: 'Finished' };
+      const diff = new Date().valueOf() - t0.valueOf();
+      newState = { ...this.state, status: `Finished in ${diff} ms` };
       this.setState(newState);
+      */
+      const { title, body } = this.state;
+      const post = {
+         title, body
+      }
+      if (this.props.createPost) {
+         this.props.createPost(post);
+      }
    }
 
    render() {
-      const { status, post } = this.state;
-      const { title, body } = post;
+      // const { status, post } = this.state;
+      const { title, body } = this.state;
       return (
          <div>
             <h1>Post form</h1>
@@ -79,3 +101,10 @@ export default class PostForm extends React.Component<PostForm.Props, PostForm.S
       )
    }
 }
+
+const mapStateToProps = (state: any) => ({
+   posts: state.posts.items,
+   newPost: state.posts.item
+});
+
+export default connect(mapStateToProps, { createPost })(PostForm);

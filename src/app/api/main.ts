@@ -12,7 +12,8 @@ export const getData = async () => {
    return response.data;
 };
 
-export const postData = async (data: PostModel) => {
+export const postData = async (data: PostModel): Promise<any> => {
    let response = await axios.post(API, data);
    console.log(response.data);
+   return response.data;
 };
