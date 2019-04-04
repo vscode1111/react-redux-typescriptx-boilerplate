@@ -52,6 +52,7 @@
       "postcss-reporter": "^6.0.1",
       "postcss-url": "^8.0.0",
       "prettier": "^1.16.4",
+      "redux-devtools-extension": "^2.13.8",
       "sass-loader": "^7.1.0",
       "scub111-fileio": "^1.0.7",
       "selenium-webdriver": "^3.6.0",
