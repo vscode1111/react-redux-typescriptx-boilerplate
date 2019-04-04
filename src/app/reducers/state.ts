@@ -1,10 +1,10 @@
-// import { TodoModel } from 'app/models';
+import { PostModel } from 'app/models/PostModel';
 
-export interface RootState {
-  // todos: RootState.TodoState;
-  // router?: any;
+export interface PostReducerModel {
+   items: PostModel[];
+   item: PostModel;
 }
 
 export namespace RootState {
-  // export type TodoState = TodoModel[];
+  export type PostsState = PostReducerModel;
 }

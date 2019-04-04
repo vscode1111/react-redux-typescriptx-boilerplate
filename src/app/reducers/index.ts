@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 import { RootState } from 'app/reducers/state';
-import { postReducer } from 'app/reducers/postReducer';
+import { postReducer } from 'app/reducers/posts';
 // import { todoReducer } from './todos';
 // export { RootState };
 

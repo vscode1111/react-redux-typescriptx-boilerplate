@@ -2,7 +2,7 @@ import * as React from 'react';
 // import { getData } from 'app/api/main';
 import { PostModel } from 'app/models/PostModel';
 import { connect } from 'react-redux';
-import { PostActions } from 'app/actions/postActions'
+import { PostActions } from 'app/actions/posts'
 const fetchPosts = PostActions.fetchPosts;
 
 export namespace Posts {
