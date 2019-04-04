@@ -2,7 +2,8 @@ import * as React from 'react';
 // import { getData } from 'app/api/main';
 import { PostModel } from 'app/models/PostModel';
 import { connect } from 'react-redux';
-import { fetchPosts } from 'app/actions/postActions'
+import { PostActions } from 'app/actions/postActions'
+const fetchPosts = PostActions.fetchPosts;
 
 export namespace Posts {
    export interface Props {
@@ -21,7 +22,6 @@ class Posts extends React.Component<Posts.Props, Posts.State> {
    }
 
    componentWillReceiveProps(nextProps: any) {
-      console.log(nextProps);
       if (nextProps.newPost) {
          this.props.posts.unshift(nextProps.newPost)
       }
