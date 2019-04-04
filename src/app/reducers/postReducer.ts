@@ -5,7 +5,7 @@ const initialState = {
    item: {}
 }
 
-export default function(state = initialState, actions: any) {
+export const postReducer = (state = initialState, actions: any) => {
    switch(actions.type) {
       case FETCH_POSTS:
          console.log('FETCH_POSTS');

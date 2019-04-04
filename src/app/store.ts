@@ -1,7 +1,7 @@
-import { Store, createStore, applyMiddleware } from 'redux';
+import { Store, createStore, applyMiddleware, compose } from 'redux';
 // import { composeWithDevTools } from 'redux-devtools-extension';
 import { logger } from 'app/middleware';
-import { RootState, rootReducer } from 'app/reducers';
+import { rootReducer } from 'app/reducers';
 
 // import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
@@ -15,9 +15,12 @@ import thunk from 'redux-thunk';
 
 // export default store;
 
-export function configureStore(initialState?: RootState): Store<RootState> {
+export function configureStore(initialState?: any): Store {
    // let middleware = applyMiddleware(logger);
-   let middleware = applyMiddleware(thunk);
+   let middleware = compose(
+      applyMiddleware(thunk),
+      (<any>window).__REDUX_DEVTOOLS_EXTENSION__ && (<any>window).__REDUX_DEVTOOLS_EXTENSION__()
+   );
 
    //   if (process.env.NODE_ENV !== 'production') {
    //     middleware = composeWithDevTools(middleware);
@@ -25,7 +28,7 @@ export function configureStore(initialState?: RootState): Store<RootState> {
 
    // const middleware = [thunk];
 
-   const store = createStore(rootReducer as any, initialState as any, middleware) as Store<RootState>;
+   const store = createStore(rootReducer as any, initialState as any, middleware) as Store;
 
    //   if (module.hot) {
    //     module.hot.accept('app/reducers', () => {

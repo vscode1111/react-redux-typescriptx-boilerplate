@@ -16,13 +16,6 @@ export namespace Posts {
 }
 
 class Posts extends React.Component<Posts.Props, Posts.State> {
-   // constructor(props: Posts.Props) {
-   //    super(props);
-   //    this.state = {
-   //       posts: []
-   //    };
-   // }
-
    async componentWillMount() {
       this.props.fetchPosts();
    }
