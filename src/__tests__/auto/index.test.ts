@@ -76,6 +76,7 @@ describe('webdriver', () => {
          const rootText = await rootElement.getText();
          // console.log(rootText);
          expect(rootText).toContain('Hello World');
+         expect(rootText).toContain('sunt aut facere repellat provident occaecati excepturi optio reprehenderit');
 
          await clickCell(driver, 'cell0');
          await clickCell(driver, 'cell1');
