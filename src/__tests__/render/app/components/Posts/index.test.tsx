@@ -8,7 +8,7 @@ import Posts from 'app/components/Posts';
 
 configure({ adapter: new Adapter() });
 
-jest.mock('app/api/main');
+jest.mock('app/services/api');
 
 describe('<Posts />', () => {
    // beforeAll(() => {

@@ -6,7 +6,7 @@ import PostForm from 'app/components/PostForm';
 
 configure({ adapter: new Adapter() });
 
-jest.mock('app/api/main');
+jest.mock('app/services/api');
 
 describe('<PostForm />', () => {
    it('PostForm renders', async () => {
