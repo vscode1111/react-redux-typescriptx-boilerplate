@@ -3,7 +3,8 @@ import * as React from 'react';
 import { PostModel } from 'app/models/PostModel';
 import { connect } from 'react-redux';
 import { PostActions } from 'app/actions/posts'
-const fetchPosts = PostActions.fetchPosts;
+import { RootState } from 'src/app/reducers/state';
+// const fetchPosts = PostActions.fetchPosts;
 
 export namespace Posts {
    export interface Props {
@@ -49,9 +50,13 @@ class Posts extends React.Component<Posts.Props, Posts.State> {
    }
 }
 
-const mapStateToProps = (state: any) => ({
+const mapStateToProps = (state: RootState.PostsState) => ({
    posts: state.posts.items,
    newPost: state.posts.item
 });
 
-export default connect(mapStateToProps, { fetchPosts })(Posts)
+const actions = {
+   fetchPosts: PostActions.fetchPosts
+ };
+
+export default connect(mapStateToProps, actions)(Posts)
