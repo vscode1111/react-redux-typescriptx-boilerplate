@@ -10,8 +10,8 @@ import rootSaga from 'app/sagas';
 export function configureStore(initialState?: any): Store {
    const sagaMiddleware = createSagaMiddleware();
    let middleware = compose(
-      // applyMiddleware(thunk),
-      applyMiddleware(sagaMiddleware),
+      applyMiddleware(thunk),
+      // applyMiddleware(sagaMiddleware),
       applyMiddleware(logger)
       // (<any>window).__REDUX_DEVTOOLS_EXTENSION__ && (<any>window).__REDUX_DEVTOOLS_EXTENSION__()
    );
@@ -22,7 +22,7 @@ export function configureStore(initialState?: any): Store {
 
    const store = createStore(rootReducer as any, initialState as any, middleware) as Store;
 
-   sagaMiddleware.run(rootSaga);
+   // sagaMiddleware.run(rootSaga);
 
    // PostActions.fetchPosts();
 
