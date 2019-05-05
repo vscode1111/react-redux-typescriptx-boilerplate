@@ -5,9 +5,9 @@ import { PostModel } from 'app/models/PostModel';
 
 const initialState: RootState.PostsState = {
    items: [],
-   item: {}
+   item: {},
+   error: ''
 }
-
 
 /* export const postReducer = (state = initialState, action: any) => {
    switch (action.type) {
@@ -26,12 +26,18 @@ const initialState: RootState.PostsState = {
    }
 } */
 
-export const postReducer = handleActions<RootState.PostsState, PostModel[] & PostModel>(
+export const postReducer = handleActions<RootState.PostsState, PostModel[] & PostModel & any>(
    {
-      [PostActions.Type.FETCH_POSTS]: (state, action) => {
+      [PostActions.Type.FETCH_POSTS_SUCCESS]: (state, action) => {
          return {
             ...state,
             items: action.payload
+         }
+      },
+      [PostActions.Type.FETCH_POSTS_FAILURE]: (state, action) => {
+         return {
+            ...state,
+            error: action.payload
          }
       },
       [PostActions.Type.NEW_POST]: (state, action) => {

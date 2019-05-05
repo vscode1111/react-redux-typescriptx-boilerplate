@@ -1,22 +1,26 @@
 import api from 'app/services/api';
 import { PostActions } from 'app/actions/posts';
-import { call, put, takeEvery } from 'redux-saga/effects'
+import { call, put, takeEvery, all, fork } from 'redux-saga/effects'
+import { PostModel } from 'app/models/PostModel';
 
 export function* fetchPostsTask() {
    try {
       const payload = yield call(api.getData);
-      // yield put(fetchActivity.success(payload));
+      yield put(PostActions.fetchPostsSuccess(payload));
    } catch (err) {
       // yield put(fetchActivity.failure(err.message));
+      yield put(PostActions.fetchPostsFailure(err.message));
    }
 }
 
 export function* watchFetchPosts() {
-   yield takeEvery(PostActions.Type.FETCH_POSTS, fetchPostsTask);
+   console.log('watchFetchPosts');
+   yield takeEvery(PostActions.Type.FETCH_POSTS_START, fetchPostsTask);
 }
 
 export default function* postsSaga() {
-   yield [
-      watchFetchPosts(),
-   ];
+   console.log('postsSaga');
+   yield all([
+      fork(watchFetchPosts),
+   ]);
 }

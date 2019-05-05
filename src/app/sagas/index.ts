@@ -1,7 +1,8 @@
 import postsSaga from 'app/sagas/posts';
+import { all, fork } from 'redux-saga/effects';
 
 export default function* rootSaga() {
-   yield [
-      postsSaga()
-   ]
+   yield all ([
+      fork(postsSaga)
+   ])
 }

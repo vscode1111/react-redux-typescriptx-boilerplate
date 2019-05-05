@@ -42,21 +42,21 @@ class Posts extends React.Component<Posts.Props, Posts.State> {
 
    render() {
       return (
-         <div>
+         <>
             <h1>Posts</h1>
             {this.renderPosts()}
-         </div>
+         </>
       );
    }
 }
 
-const mapStateToProps = (state: RootState.PostsState) => ({
+const mapStateToProps = (state: {posts: RootState.PostsState}) => ({
    posts: state.posts.items,
    newPost: state.posts.item
 });
 
-const actions = {
-   fetchPosts: PostActions.fetchPosts
- };
+const actions = (dispatch: any) => ({
+   fetchPosts: () => dispatch(PostActions.fetchPostsStart())
+ });
 
 export default connect(mapStateToProps, actions)(Posts)
