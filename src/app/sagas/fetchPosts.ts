@@ -3,14 +3,11 @@ import { PostActions } from 'app/actions/posts';
 import { call, put, takeEvery, all, fork } from 'redux-saga/effects'
 import { PostModel } from 'app/models/PostModel';
 
-export function* fetchPostsTask() {
-   try {
-      const payload = yield call(api.getData);
-      yield put(PostActions.fetchPostsSuccess(payload));
-   } catch (err) {
-      // yield put(fetchActivity.failure(err.message));
-      yield put(PostActions.fetchPostsFailure(err.message));
-   }
+export default function* fetchPostsSaga() {
+   console.log('postsSaga');
+   yield all([
+      fork(watchFetchPosts),
+   ]);
 }
 
 export function* watchFetchPosts() {
@@ -18,9 +15,13 @@ export function* watchFetchPosts() {
    yield takeEvery(PostActions.Type.FETCH_POSTS_START, fetchPostsTask);
 }
 
-export default function* postsSaga() {
-   console.log('postsSaga');
-   yield all([
-      fork(watchFetchPosts),
-   ]);
+
+export function* fetchPostsTask() {
+   try {
+      const payload = yield call(api.getData);
+      yield put(PostActions.fetchPostsSuccess(payload));
+   } catch (err) {
+      yield put(PostActions.fetchPostsFailure(err.message));
+   }
 }
+

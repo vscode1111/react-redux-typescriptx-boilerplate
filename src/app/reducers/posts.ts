@@ -40,7 +40,7 @@ export const postReducer = handleActions<RootState.PostsState, PostModel[] & Pos
             error: action.payload
          }
       },
-      [PostActions.Type.NEW_POST]: (state, action) => {
+      [PostActions.Type.CREATE_POST_START]: (state, action) => {
          return {
             ...state,
             item: action.payload

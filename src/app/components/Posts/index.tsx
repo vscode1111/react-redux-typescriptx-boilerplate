@@ -3,7 +3,7 @@ import * as React from 'react';
 import { PostModel } from 'app/models/PostModel';
 import { connect } from 'react-redux';
 import { PostActions } from 'app/actions/posts'
-import { RootState } from 'src/app/reducers/state';
+import { RootState } from 'app/reducers/state';
 // const fetchPosts = PostActions.fetchPosts;
 
 export namespace Posts {

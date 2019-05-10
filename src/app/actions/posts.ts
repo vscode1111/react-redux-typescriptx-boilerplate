@@ -7,7 +7,10 @@ export namespace PostActions {
       FETCH_POSTS_START = 'FETCH_POSTS_START',
       FETCH_POSTS_SUCCESS = 'FETCH_POSTS_SUCCESS',
       FETCH_POSTS_FAILURE = 'FETCH_POSTS_FAILURE',
-      NEW_POST = 'NEW_POSTS'
+
+      CREATE_POST_START = 'CREATE_POST_START',
+      CREATE_POST_SUCCESS = 'CREATE_POST_SUCCESS',
+      CREATE_POST_FAILURE = 'CREATE_POST_FAILURE',
    }
 
    // export const fetchPostsStart = () => ({
@@ -23,7 +26,7 @@ export namespace PostActions {
    export const fetchPostsSuccess = createAction<PostModel[]>(Type.FETCH_POSTS_SUCCESS);
    export const fetchPostsFailure = createAction<any>(Type.FETCH_POSTS_FAILURE);
 
-   const actionCreate = createAction<PostModel>(Type.NEW_POST);
+   const actionCreate = createAction<PostModel>(Type.CREATE_POST_START);
 
    // export const fetchPosts = () => async (dispatch: any) => {
    //    console.log('fetchPosts');
@@ -32,9 +35,18 @@ export namespace PostActions {
    // }
 
 
-   export const createPost = (post: PostModel) => async (dispatch: any) => {
-      console.log('createPost');
-      // const responsePost = await api.postData(post);
-      // dispatch(actionCreate(responsePost));
-   }
+   // export const createPost = (post: PostModel) => async (dispatch: any) => {
+   //    console.log('createPost');
+   //    // const responsePost = await api.postData(post);
+   //    // dispatch(actionCreate(responsePost));
+   // }
+
+   export const createPostsStart = createAction<PostModel>(Type.CREATE_POST_START);
+
+   // export const fetchPostsFinish = (responsePosts: any) => ({
+   //    type: Type.FETCH_POSTS_FINISH,
+   //    payload: responsePosts
+   // })
+   export const createPostsSuccess = createAction(Type.FETCH_POSTS_SUCCESS);
+   export const createPostsFailure = createAction<any>(Type.FETCH_POSTS_FAILURE);
 }

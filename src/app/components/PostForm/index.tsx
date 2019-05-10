@@ -2,7 +2,7 @@ import * as React from 'react'
 import { PostModel } from 'app/models/PostModel';
 import { connect } from 'react-redux';
 import { PostActions } from 'app/actions/posts'
-const createPost = PostActions.createPost;
+const createPost = PostActions.createPostsStart;
 
 export namespace PostForm {
    export interface Props {

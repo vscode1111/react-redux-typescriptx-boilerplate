@@ -1,8 +1,10 @@
-import postsSaga from 'app/sagas/posts';
+import fetchPostsSaga from 'app/sagas/fetchPosts';
 import { all, fork } from 'redux-saga/effects';
+import createPostSaga from 'app/sagas/createPost';
 
 export default function* rootSaga() {
    yield all ([
-      fork(postsSaga)
+      fork(fetchPostsSaga),
+      fork(createPostSaga)
    ])
 }

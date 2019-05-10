@@ -7,9 +7,9 @@ module.exports = {
    },
    //"testRegex": "(/__tests23__/.*|(\\.|/)(test|spec))\\.tsx?$",
    //"testRegex": "/__tests__/render/app/components/Posts/.*",
-   // "testRegex": "/__tests__/auto/.*",
+   "testRegex": "/__tests__/auto/.*",
    //"testRegex": "/__tests__/render/app/container/.*",
-   "testRegex": "/__tests__/.*",
+   //"testRegex": "/__tests__/.*",
    "moduleFileExtensions": [
       "ts",
       "tsx",
