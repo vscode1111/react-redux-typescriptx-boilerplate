@@ -14,20 +14,66 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 
+const configProd = {
+   app: [
+      `${sourcePath}/app/index.tsx`
+   ],
+   appFilename: 'app-[contenthash].js',
+   vendorFilename: 'vendor-[contenthash].js',
+   devtool: '',
+   cssUse: [
+      MiniCssExtractPlugin.loader,
+      {
+         loader: 'css-loader',
+         options: {
+            modules: true,
+         }
+      },
+      {
+         loader: 'less-loader',
+      },
+   ],
+   maxAssetSize: 2 * 1048576
+}
+
+const configDev = {
+   app: [
+      'react-dev-utils/webpackHotDevClient',
+      `${sourcePath}/app/index.tsx`
+   ],
+   appFilename: 'app-debug.js',
+   vendorFilename: 'vendor-debug.js',   
+   devtool: 'source-map',
+   cssUse: [
+      'style-loader',
+      {
+         loader: 'css-loader',
+         options: {
+            modules: true,
+            sourceMap: true,
+         }
+      },
+      {
+         loader: 'less-loader',
+         options: { sourceMap: true }
+      },
+   ],
+   maxAssetSize: 3 * 1048576
+}
+
 module.exports = (env, argv) => {
    const isProduction = argv.mode === 'production';
    console.log(`isProduction = ${isProduction}`);
+   const config = isProduction ? configProd : configDev;
 
    return {
       // context: sourcePath,
-      entry: {
-         jsx: `${sourcePath}/app/index.tsx`
-      },
+      entry: config.app,
       output: {
-         filename: isProduction ? 'app-[contenthash].js' : 'app-debug.js',
+         filename: config.appFilename,
          path: outPath,
       },
-      devtool: isProduction ? '' : 'source-map',
+      devtool: config.devtool,
       resolve: {
          extensions: ['.js', '.ts', '.tsx'],
          // Fix webpack's default behavior to not load packages with jsnext:main module
@@ -49,21 +95,7 @@ module.exports = (env, argv) => {
             {
                test: /\.(css|less)$/,
                exclude: /node_modules/,
-               // use: config.css
-               use: [
-                  isProduction ? MiniCssExtractPlugin.loader : 'style-loader',
-                  {
-                     loader: 'css-loader',
-                     options: {
-                        modules: true,
-                        sourceMap: !isProduction,
-                     }
-                  },
-                  {
-                     loader: 'less-loader',
-                     options: { sourceMap: !isProduction }
-                  },
-               ]
+               use: config.cssUse
             },
          ]
       },
@@ -76,7 +108,7 @@ module.exports = (env, argv) => {
                vendors: {
                   test: /[\\/]node_modules[\\/]/,
                   chunks: 'all',
-                  filename: isProduction ? 'vendor-[contenthash].js' : 'vendor-debug.js',
+                  filename: config.vendorFilename,
                   priority: -10
                }
             }
@@ -84,8 +116,8 @@ module.exports = (env, argv) => {
       },
       performance: {
          hints: "warning", // enum
-         maxAssetSize: 2 * 1048576, // int (in bytes),
-         maxEntrypointSize: 2 * 1048576, // int (in bytes)
+         maxAssetSize: config.maxAssetSize, // int (in bytes),
+         maxEntrypointSize: config.maxAssetSize, // int (in bytes)
          assetFilter: function (assetFilename) {
             // Function predicate that provides asset filenames
             return assetFilename.endsWith('.css') || assetFilename.endsWith('.js');
