@@ -30,5 +30,5 @@ export default {
    async postData(data: PostModel): Promise<any> {
       const response = await callApi('/posts', MethodType.POST, data);
       return response.data;
-   }
+   },
 }

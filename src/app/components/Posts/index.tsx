@@ -4,11 +4,10 @@ import { PostModel } from 'app/models/PostModel';
 import { connect } from 'react-redux';
 import { PostActions } from 'app/actions/posts'
 import { RootState } from 'app/reducers/state';
-// const fetchPosts = PostActions.fetchPosts;
 
 export namespace Posts {
    export interface Props {
-      fetchPosts: Function;
+      fetchPostsStart: Function;
       posts: PostModel[];
    }
 
@@ -19,7 +18,7 @@ export namespace Posts {
 
 class Posts extends React.Component<Posts.Props, Posts.State> {
    async componentWillMount() {
-      this.props.fetchPosts();
+      this.props.fetchPostsStart();
    }
 
    componentWillReceiveProps(nextProps: any) {
@@ -56,7 +55,7 @@ const mapStateToProps = (state: {posts: RootState.PostsState}) => ({
 });
 
 const actions = (dispatch: any) => ({
-   fetchPosts: () => dispatch(PostActions.fetchPostsStart())
+   fetchPostsStart: () => dispatch(PostActions.fetchPostsStart())
  });
 
 export default connect(mapStateToProps, actions)(Posts)

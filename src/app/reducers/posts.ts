@@ -6,6 +6,7 @@ import { PostModel } from 'app/models/PostModel';
 const initialState: RootState.PostsState = {
    items: [],
    item: {},
+   isFetching: false,
    error: ''
 }
 
@@ -28,24 +29,47 @@ const initialState: RootState.PostsState = {
 
 export const postReducer = handleActions<RootState.PostsState, PostModel[] & PostModel & any>(
    {
+      [PostActions.Type.FETCH_POSTS_START]: (state, action) => {
+         return {
+            ...state,
+            isFetching: true
+         }
+      },
       [PostActions.Type.FETCH_POSTS_SUCCESS]: (state, action) => {
          return {
             ...state,
-            items: action.payload
+            items: action.payload,
+            isFetching: false
          }
       },
       [PostActions.Type.FETCH_POSTS_FAILURE]: (state, action) => {
          return {
             ...state,
-            error: action.payload
+            error: action.payload,
+            isFetching: false
          }
       },
+
       [PostActions.Type.CREATE_POST_START]: (state, action) => {
          return {
             ...state,
-            item: action.payload
+            item: action.payload,
+            isFetching: true
          }
-      }
+      },
+      [PostActions.Type.CREATE_POST_SUCCESS]: (state, action) => {
+         return {
+            ...state,
+            isFetching: false
+         }
+      },
+      [PostActions.Type.FETCH_POSTS_FAILURE]: (state, action) => {
+         return {
+            ...state,
+            error: action.payload,
+            isFetching: false
+         }
+      },
    },
    initialState
 );

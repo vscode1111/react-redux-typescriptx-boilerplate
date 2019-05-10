@@ -1,10 +1,10 @@
 import api from 'app/services/api';
 import { PostActions } from 'app/actions/posts';
-import { call, put, takeEvery, all, fork, take } from 'redux-saga/effects'
+import { call, put, takeEvery, all, fork, take, takeLatest } from 'redux-saga/effects'
 import { PostModel } from 'app/models/PostModel';
 
 export default function* createPostSaga() {
-   console.log('createSaga');
+   console.log('createPostSaga');
    yield all([
       fork(watchCreatePost),
    ]);
@@ -12,17 +12,16 @@ export default function* createPostSaga() {
 
 export function* watchCreatePost() {
    console.log('watchCreatePost');
-   yield takeEvery(PostActions.Type.CREATE_POST_START, createPostsTask);
+   yield takeLatest(PostActions.Type.CREATE_POST_START, createPostsTask);
 }
 
-export function* createPostsTask() {
-   const result = yield take(PostActions.createPostsStart);
-   console.log(result.payload);
+export function* createPostsTask(action: any) {
+   console.log(action.payload);
    try {
-      yield call(api.postData, result.payload)
-      yield put(PostActions.createPostsSuccess());
+      yield call(api.postData, action.payload)
+      yield put(PostActions.createPostSuccess(true));
    } catch (err) {
-      yield put(PostActions.createPostsFailure(err.message));
+      yield put(PostActions.createPostFailure(err.message));
    }
 }
 

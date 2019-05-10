@@ -2,11 +2,11 @@ import * as React from 'react'
 import { PostModel } from 'app/models/PostModel';
 import { connect } from 'react-redux';
 import { PostActions } from 'app/actions/posts'
-const createPost = PostActions.createPostsStart;
+const createPostStart = PostActions.createPostStart;
 
 export namespace PostForm {
    export interface Props {
-      createPost?: Function;
+      createPostStart?: Function;
    }
    export interface State {
       status?: string;
@@ -52,20 +52,12 @@ class PostForm extends React.Component<PostForm.Props, PostForm.State> {
       const post = {
          title, body
       }
-      if (this.props.createPost) {
-         await this.props.createPost(post);
+      if (this.props.createPostStart) {
+         await this.props.createPostStart(post);
       }
       const diff = new Date().valueOf() - t0.valueOf();
       newState = { ...this.state, status: `Finished in ${diff} ms` };
       this.setState(newState);
-
-      /*       const { title, body } = this.state;
-            const post = {
-               title, body
-            }
-            if (this.props.createPost) {
-               this.props.createPost(post);
-            } */
    }
 
    render() {
@@ -109,4 +101,4 @@ const mapStateToProps = (state: any) => ({
    newPost: state.posts.item
 });
 
-export default connect(mapStateToProps, { createPost })(PostForm);
+export default connect(mapStateToProps, { createPostStart })(PostForm);
