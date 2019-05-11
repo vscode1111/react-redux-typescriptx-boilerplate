@@ -29,7 +29,7 @@ const initialState: RootState.PostsState = {
 
 export const postReducer = handleActions<RootState.PostsState, PostModel[] & PostModel & any>(
    {
-      [PostActions.Type.FETCH_POSTS_START]: (state, action) => {
+      [PostActions.Type.FETCH_POSTS_REQUEST]: (state, action) => {
          return {
             ...state,
             isFetching: true
@@ -50,7 +50,7 @@ export const postReducer = handleActions<RootState.PostsState, PostModel[] & Pos
          }
       },
 
-      [PostActions.Type.CREATE_POST_START]: (state, action) => {
+      [PostActions.Type.CREATE_POST_REQUEST]: (state, action) => {
          return {
             ...state,
             item: action.payload,

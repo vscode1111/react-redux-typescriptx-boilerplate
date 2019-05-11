@@ -12,16 +12,18 @@ export default function* fetchPostsSaga() {
 
 export function* watchFetchPosts() {
    console.log('watchFetchPosts');
-   yield takeEvery(PostActions.Type.FETCH_POSTS_START, fetchPostsTask);
+   yield takeEvery(PostActions.Type.FETCH_POSTS_REQUEST, fetchPostsTask);
 }
 
 
 export function* fetchPostsTask() {
    try {
       const payload = yield call(api.getData);
-      yield put(PostActions.fetchPostsSuccess(payload));
+      // yield put(PostActions.fetchPostsSuccess(payload));
+      yield put(PostActions.fetchActivity.success(payload));
    } catch (err) {
-      yield put(PostActions.fetchPostsFailure(err.message));
+      // yield put(PostActions.fetchPostsFailure(err.message));
+      yield put(PostActions.fetchActivity.failure(err));
    }
 }
 

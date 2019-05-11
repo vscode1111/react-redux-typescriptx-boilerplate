@@ -1,5 +1,4 @@
 import * as React from 'react';
-// import { getData } from 'app/api/main';
 import { PostModel } from 'app/models/PostModel';
 import { connect } from 'react-redux';
 import { PostActions } from 'app/actions/posts'
@@ -7,7 +6,7 @@ import { RootState } from 'app/reducers/state';
 
 export namespace Posts {
    export interface Props {
-      fetchPostsStart: Function;
+      fetchPostsRequest: Function;
       posts: PostModel[];
    }
 
@@ -18,7 +17,7 @@ export namespace Posts {
 
 class Posts extends React.Component<Posts.Props, Posts.State> {
    async componentWillMount() {
-      this.props.fetchPostsStart();
+      this.props.fetchPostsRequest();
    }
 
    componentWillReceiveProps(nextProps: any) {
@@ -54,8 +53,9 @@ const mapStateToProps = (state: {posts: RootState.PostsState}) => ({
    newPost: state.posts.item
 });
 
-const actions = (dispatch: any) => ({
-   fetchPostsStart: () => dispatch(PostActions.fetchPostsStart())
+const mapDispatchToProps = (dispatch: any) => ({
+   // fetchPostsRequest: () => dispatch(PostActions.fetchPostsRequest())
+   fetchPostsRequest: () => dispatch(PostActions.fetchActivity.request())
  });
 
-export default connect(mapStateToProps, actions)(Posts)
+export default connect(mapStateToProps, mapDispatchToProps)(Posts)
