@@ -13,7 +13,6 @@ export function configureStore(initialState?: any): Store {
       // applyMiddleware(thunk),
       applyMiddleware(sagaMiddleware),
       applyMiddleware(logger)
-      // (<any>window).__REDUX_DEVTOOLS_EXTENSION__ && (<any>window).__REDUX_DEVTOOLS_EXTENSION__()
    );
 
    if (process.env.NODE_ENV !== 'production') {
@@ -23,8 +22,6 @@ export function configureStore(initialState?: any): Store {
    const store = createStore(rootReducer as any, initialState as any, middleware) as Store;
 
    sagaMiddleware.run(rootSaga);
-
-   // PostActions.fetchPosts();
 
    return store;
 }
