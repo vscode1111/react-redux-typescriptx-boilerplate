@@ -1,7 +1,5 @@
 import { createAction } from 'redux-actions';
-// import api from 'app/services/api';
 import { PostModel } from 'app/models/PostModel';
-import { createActions } from 'app/utils/actions';
 
 export namespace PostActions {
    export enum Type {
@@ -21,7 +19,7 @@ export namespace PostActions {
    };
 
    export const createActivity = {
-      request: createAction(Type.FETCH_POSTS_REQUEST),
+      request: createAction<PostModel>(Type.CREATE_POST_REQUEST),
       success: createAction(Type.CREATE_POST_SUCCESS),
       failure: createAction<any>(Type.CREATE_POST_FAILURE)
    }

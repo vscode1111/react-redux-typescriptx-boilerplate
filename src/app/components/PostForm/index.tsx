@@ -102,7 +102,7 @@ const mapStateToProps = (state: any) => ({
 });
 
 const mapDispatchToProps = (dispatch: any) => ({
-   createPostRequest: () => dispatch(PostActions.fetchActivity.request())
+   createPostRequest: (post: PostModel) => dispatch(PostActions.createActivity.request(post))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(PostForm);
