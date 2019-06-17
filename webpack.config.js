@@ -9,10 +9,11 @@ const sourcePath = path.join(__dirname, `./${srcDir}`);
 const outPath = path.join(__dirname, `./${buildDir}`);
 
 // plugins
-const CleanWebpackPlugin = require('clean-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
+const TimingCompilationPlugin = require('./TimingCompilationPlugin');
 
 const configProd = {
    app: [
@@ -89,7 +90,8 @@ module.exports = (env, argv) => {
             // .ts, .tsx
             {
                test: /\.(ts|tsx)$/,
-               loader: 'awesome-typescript-loader',
+               // loader: 'awesome-typescript-loader',
+               loader: 'ts-loader',
             },
             // .css
             {
@@ -134,6 +136,7 @@ module.exports = (env, argv) => {
                React: 'react',
                Promise: 'es6-promise' //add Promises for IE !!! 
             }),
+            new TimingCompilationPlugin(),
          );
          if (isProduction) {
             //add some plugins that are only for production here

@@ -41,7 +41,7 @@ class Posts extends React.Component<Posts.Props, Posts.State> {
    render() {
       return (
          <>
-            <h1>Posts</h1>
+            <h1>Posts 23</h1>
             {this.renderPosts()}
          </>
       );
