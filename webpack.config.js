@@ -44,7 +44,8 @@ const configDev = {
    ],
    appFilename: 'app-debug.js',
    vendorFilename: 'vendor-debug.js',   
-   devtool: 'source-map',
+   // devtool: 'source-map',
+   devtool: 'cheap-module-eval-source-map',
    cssUse: [
       'style-loader',
       {
