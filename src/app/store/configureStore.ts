@@ -15,6 +15,8 @@ export function configureStore(initialState?: any): Store {
       applyMiddleware(logger)
    );
 
+   const t = 17;
+
    if (process.env.NODE_ENV !== 'production') {
       middleware = composeWithDevTools(middleware);
    }

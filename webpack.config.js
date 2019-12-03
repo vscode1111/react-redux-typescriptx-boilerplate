@@ -60,7 +60,7 @@ const configDev = {
          options: { sourceMap: true }
       },
    ],
-   maxAssetSize: 3 * 1048576
+   maxAssetSize: 10 * 1048576
 }
 
 module.exports = (env, argv) => {
