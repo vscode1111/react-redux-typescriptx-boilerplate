@@ -1,7 +1,7 @@
-import * as React from 'react'
+import * as React from 'react';
 import { PostModel } from 'app/models/PostModel';
 import { connect } from 'react-redux';
-import { PostActions } from 'app/actions/posts'
+import { PostActions } from 'app/actions/posts';
 
 export namespace PostForm {
    export interface Props {
@@ -25,8 +25,7 @@ class PostForm extends React.Component<PostForm.Props, PostForm.State> {
       };
    }
 
-   onChange(e: React.ChangeEvent<HTMLInputElement>
-      | React.ChangeEvent<HTMLTextAreaElement>) {
+   onChange(e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>) {
       const post = this.state.post;
       const newPost = { ...post, ...{ [e.target.name]: e.target.value } };
       const newState = { ...this.state, post: newPost };
@@ -53,8 +52,9 @@ class PostForm extends React.Component<PostForm.Props, PostForm.State> {
       */
       const { title, body } = this.state.post;
       const post = {
-         title, body
-      }
+         title,
+         body
+      };
       if (this.props.createPostRequest) {
          await this.props.createPostRequest(post);
       }
@@ -66,7 +66,7 @@ class PostForm extends React.Component<PostForm.Props, PostForm.State> {
       return (
          <div>
             <h1>Post form</h1>
-            <form onSubmit={async e => await this.onSubmit(e)}>
+            <form onSubmit={async (e) => await this.onSubmit(e)}>
                <div>
                   <label>Title: </label>
                   <br />
@@ -74,25 +74,21 @@ class PostForm extends React.Component<PostForm.Props, PostForm.State> {
                      type="text"
                      name="title"
                      value={title}
-                     onChange={e => this.onChange(e)}
+                     onChange={(e) => this.onChange(e)}
                   />
                </div>
                <br />
                <div>
                   <label>Body: </label>
                   <br />
-                  <textarea
-                     name="body"
-                     value={body}
-                     onChange={e => this.onChange(e)}
-                  />
+                  <textarea name="body" value={body} onChange={(e) => this.onChange(e)} />
                </div>
                <br />
                <button type="submit">Submit</button>
                <div>{status}</div>
             </form>
          </div>
-      )
+      );
    }
 }
 
@@ -105,4 +101,7 @@ const mapDispatchToProps = (dispatch: any) => ({
    createPostRequest: (post: PostModel) => dispatch(PostActions.createActivity.request(post))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(PostForm);
+export default connect(
+   mapStateToProps,
+   mapDispatchToProps
+)(PostForm);

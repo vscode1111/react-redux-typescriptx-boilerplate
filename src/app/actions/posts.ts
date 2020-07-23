@@ -9,7 +9,7 @@ export namespace PostActions {
 
       CREATE_POST_REQUEST = 'CREATE_POST_REQUEST',
       CREATE_POST_SUCCESS = 'CREATE_POST_SUCCESS',
-      CREATE_POST_FAILURE = 'CREATE_POST_FAILURE',
+      CREATE_POST_FAILURE = 'CREATE_POST_FAILURE'
    }
 
    export const fetchActivity = {
@@ -22,5 +22,5 @@ export namespace PostActions {
       request: createAction<PostModel>(Type.CREATE_POST_REQUEST),
       success: createAction(Type.CREATE_POST_SUCCESS),
       failure: createAction<any>(Type.CREATE_POST_FAILURE)
-   }
+   };
 }
